@@ -1,0 +1,5 @@
+---
+#config nginx on jumpbox, nginx_ub, nginx_co
+- import_playbook: config_jb.yml
+- import_playbook: django_ub.yml
+- import_playbook: django_co.yml

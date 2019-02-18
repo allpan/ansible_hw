@@ -1,0 +1,9 @@
+---
+        - name: Running the container db
+          docker_container:
+            image: "{{ image_ubuntu }}"
+            name: "{{ host_name_db }}"
+            state: started
+            networks:
+              - name: "{{ network_name }}"
+                ipv4_address: "172.17.2.5"

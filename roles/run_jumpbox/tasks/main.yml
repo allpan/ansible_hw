@@ -1,0 +1,11 @@
+---
+        - name: Running the container jumpbox
+          docker_container:
+            image: "{{ image_ubuntu }}"
+            name: "{{ host_name_jb }}"
+            state: started
+            exposed_ports: "{{ jumpbox_exp_port }}"
+            published_ports: "{{ jumpbox_pub_port }}"
+            networks:
+              - name: "{{ network_name }}"
+                ipv4_address: "172.17.2.2"

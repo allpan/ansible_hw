@@ -1,0 +1,155 @@
+---
+    - hosts: localhost
+#      become: yes
+#      become_method: sudo
+      tasks:
+        - name: Build image ubuntu
+          docker_image:
+            dockerfile: pan_abp/dockerfile_ub
+            name: pan_ubuntu
+            path: ~/
+            state: present
+            
+        - name: Build image centos
+          docker_image:
+            dockerfile: pan_abp/dockerfile_co
+            name: pan_centos
+            path: ~/
+            state: present
+      
+        - name: Running the container jumpbox
+          docker_container:
+            image: pan_ubuntu
+            name: jumpbox1
+            state: started
+            exposed_ports: 80
+            published_ports: 80:80
+                        
+        - name: Running the container nginx_ub
+          docker_container:
+            image: pan_ubuntu
+            name: nginx_ub1
+            state: started
+                        
+        - name: Running the container nginx_co
+          docker_container:
+            image: pan_centos
+            name: nginx_co1
+            volumes: /sys/fs/cgroup:/sys/fs/cgroup:ro
+            privileged: yes
+            state: started
+                        
+        - name: Running the container db
+          docker_container:
+            image: pan_ubuntu
+            name: db1
+            state: started
+            
+        - name: check run docker container
+          shell: docker ps        
+    
+    
+    - hosts: jumpbox_ub
+      gather_facts: no
+      pre_tasks:
+        - name: install python with RAW jumpbox_ub
+          raw: apt-get -y install python-simplejson
+          
+      tasks:
+        - name: Nginx setup
+          apt: pkg=nginx state=installed update_cache=true
+          
+        - name: Copy nginx.conf
+          copy:
+            src: ./roles/jumpbox/templates/nginx.conf
+            dest: /etc/nginx/nginx.conf
+          
+ #      - name: Nginx reload
+ #        shell: nginx -s reload
+          
+ #       - name: Nginx restart 
+ #         service: name=nginx enabled=yes state=reloaded
+ 
+        - name: Nginx started
+          shell: nginx & 
+    
+    - hosts: nginx_ub
+      gather_facts: no
+      pre_tasks:
+        - name: install python with RAW nginx_ub
+          raw: apt-get -y install python-simplejson
+          
+      tasks:
+        - name: Nginx setup on nginx_ub
+          apt: pkg=nginx state=installed update_cache=true
+          
+        - name: Nginx started
+ #         service: name=nginx enabled=yes state=started 
+          shell: nginx &
+    
+    
+    - hosts: nginx_co
+      gather_facts: no
+      tasks:
+        - name: Install EPEL release for nginx
+          yum: name=epel-release state=present update_cache=true
+                
+        - name: install nginx
+          yum: pkg=nginx state=present update_cache=true
+
+        - name: Start Nginx
+          service: name=nginx enabled=yes state=started
+    
+    - hosts: db
+      gather_facts: no
+      pre_tasks:
+        - name: install python with RAW db
+          raw: apt-get -y install python-simplejson
+      
+    
+#    - hosts: db
+ #     vars:
+  #        mysql_root_pass: root
+#      gather_facts: yes
+#      tasks:
+#        - name: Install the MySQL packages
+#          apt: name={{ item }} state=installed update_cache=yes
+#          with_items:
+#            - systemd
+#            - mysql-server
+#            - mysql-client
+ #           - python-mysqldb
+#            - libmysqlclient-dev
+            
+
+ #       - name: Update MySQL root password for all root accounts
+#          mysql_user: name=root host={{ item }} password=root state=present
+#          with_items:
+#            - "{{ ansible_hostname }}"
+#            - 127.0.0.1
+ #           - ::1
+ #           - localhost
+            
+#       - name: Copy the root credentials as .my.cnf file
+#          copy: src=./roles/db/templates/root.cnf.j2 dest=/root/.my.cnf mode=0600
+
+ #       - name: Copy the root credentials as .my.cnf file
+ #         template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
+
+ #       - name: Ensure Anonymous user(s) are not in the database
+ #         mysql_user: name='' host={{ item }} state=absent
+ #         with_items:
+#            - localhost
+#            - "{{ ansible_hostname }}"
+
+#        - name: Remove the test database
+#          mysql_db: name=test state=absent
+ #         notify:
+ #           - Restart MySQL      
+ 
+ #       - name: Restart MySQL
+ #         service: name=mysql state=restarted
+          
+          
+                        
+        

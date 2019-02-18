@@ -1,0 +1,9 @@
+---
+        - name: Running the container nginx_ub
+          docker_container:
+            image: "{{ image_ubuntu }}"
+            name: "{{ host_name_ub }}"
+            state: started
+            networks:
+              - name: "{{ network_name }}"
+                ipv4_address: "172.17.2.3"

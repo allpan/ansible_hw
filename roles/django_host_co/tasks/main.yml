@@ -1,0 +1,16 @@
+---
+        - name: Django setup
+          package: 
+            name: python-django
+            state: present
+        
+        - name: Gunicorn setup
+          package: 
+            name: python-gunicorn
+            state: present
+            
+        - name: simple gunicorn run example
+          gunicorn:
+            app: "my.wsgi:application"
+            chdir: "/pan/my"
+            conf: "/pan/my/gunicorn.conf"

@@ -1,0 +1,6 @@
+---
+    - hosts: localhost
+      vars_files:
+        - inventories/production/group_vars/all.yml
+      roles:
+            - run_infrastructure

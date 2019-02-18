@@ -1,0 +1,14 @@
+---
+        - name: Create a network
+          docker_network:
+            name: "{{ network_name }}"
+            state: started
+            ipam_options:
+              subnet: 172.17.2.1/16
+              gateway: 172.17.2.1
+            connected:
+                  - {{ host_name_jb }}
+                  - {{ host_name_ub }}
+                  - {{ host_name_co }}
+                  - {{ host_name_db }}
+            force: yes

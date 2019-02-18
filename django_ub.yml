@@ -1,0 +1,6 @@
+---
+    - hosts: nginx_ub
+      vars_files:
+        - inventories/production/group_vars/all.yml
+      roles:
+            - django_host_ub

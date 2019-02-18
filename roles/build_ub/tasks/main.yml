@@ -1,0 +1,8 @@
+---
+    - name: Build image ubuntu
+      docker_image:
+        name: "{{ image_ubuntu }}"
+        path: "{{ main_path }}"
+        dockerfile: "{{ docker_file_ubuntu }}"
+        state: present
+    

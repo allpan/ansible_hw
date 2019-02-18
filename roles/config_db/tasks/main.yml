@@ -1,0 +1,11 @@
+---
+        - name: MariaDB-Server setup
+          package: 
+            name: mariadb-server 
+            state: present
+          
+        - name: Start Nginx
+          service: 
+            name: mysql
+            enabled: yes 
+            state: restarted

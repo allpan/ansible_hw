@@ -1,0 +1,15 @@
+# file: group_vars/all.yml
+main_path: ~/pan_abp
+docker_file_centos: /roles/build_co/files/Dockerfile
+image_centos: pan_centos
+docker_file_ubuntu: /roles/build_ub/files/Dockerfile
+image_ubuntu: pan_ubuntu
+jumpbox_exp_port: 80
+jumpbox_pub_port: 80:80
+host_name_jb: jumpbox1
+host_name_ub: nginx_ub1
+host_name_co: nginx_co1
+host_name_db: db1
+network_name: pannet
+target_dir: /pan
+source_dir: /roles/web/files/pan

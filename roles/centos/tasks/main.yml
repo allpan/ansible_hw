@@ -1,0 +1,11 @@
+---
+        - name: Running the container nginx_co
+          docker_container:
+            image: "{{ image_centos }}"
+            name: "{{ host_name_co }}"
+            volumes: /sys/fs/cgroup:/sys/fs/cgroup:ro
+            privileged: yes
+            state: started
+            networks:
+              - name: "{{ network_name }}"
+                ipv4_address: "172.17.2.4"

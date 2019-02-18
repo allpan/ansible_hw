@@ -1,0 +1,53 @@
+---
+        - name: Create a network
+          docker_network:
+            name: "{{ network_name }}"
+            ipam_options:
+              subnet: "172.20.0.1/16"
+
+        - name: Running the container jumpbox
+          docker_container:
+            image: "{{ image_ubuntu }}"
+            name: "{{ host_name_jb }}"
+            state: started
+            exposed_ports: "{{ jumpbox_exp_port }}"
+            published_ports: "{{ jumpbox_pub_port }}"
+            networks:
+              - name: "{{ network_name }}"
+                ipv4_address: "172.20.0.2"
+            
+        - name: Running the container nginx_ub
+          docker_container:
+            image: "{{ image_ubuntu }}"
+            name: "{{ host_name_ub }}"
+            state: started
+            volumes:
+              - "{{ main_path }}{{ source_dir }}:{{ target_dir }}"
+            networks:
+              - name: "{{ network_name }}"
+                ipv4_address: "172.20.0.3"
+            
+        - name: Running the container nginx_co
+          docker_container:
+            image: "{{ image_centos }}"
+            name: "{{ host_name_co }}"
+            volumes: 
+              - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+              - "{{ main_path }}{{ source_dir }}:{{ target_dir }}"
+            privileged: yes
+            state: started
+            networks:
+              - name: "{{ network_name }}"
+                ipv4_address: "172.20.0.4"
+            
+        - name: Running the container db
+          docker_container:
+            image: "{{ image_ubuntu }}"
+            name: "{{ host_name_db }}"
+            state: started
+            networks:
+              - name: "{{ network_name }}"
+                ipv4_address: "172.20.0.5"
+        
+ 
+ 

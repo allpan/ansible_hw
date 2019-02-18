@@ -1,0 +1,8 @@
+---
+    - name: Build image centos
+      docker_image:
+        name: "{{ image_centos }}"
+        path: "{{ main_path }}"
+        dockerfile: "{{ docker_file_centos }}"
+        state: present
+     

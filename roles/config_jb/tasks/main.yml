@@ -1,0 +1,13 @@
+---
+        - name: Nginx setup
+          package: 
+            name: nginx 
+            state: present
+          
+        - name: Copy nginx.conf
+          copy:
+            src: ./roles/config_jb/files/nginx.conf
+            dest: /etc/nginx/nginx.conf
+          
+        - name: Nginx started
+          shell: nginx &

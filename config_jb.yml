@@ -1,0 +1,6 @@
+---
+    - hosts: jumpbox_ub
+      vars_files:
+        - inventories/production/group_vars/all.yml
+      roles:
+            - config_jb
