@@ -3,13 +3,18 @@
           package: 
             name: python-django
             state: present
+            
+        - name: MySQL-python setup
+          package: 
+            name: MySQL-python 
+            state: present
         
         - name: Gunicorn setup
           package: 
             name: python-gunicorn
             state: present
             
-        - name: simple gunicorn run example
+        - name: centos gunicorn run
           gunicorn:
             app: "my.wsgi:application"
             chdir: "/pan/my"

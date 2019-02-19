@@ -4,8 +4,89 @@
             name: mariadb-server 
             state: present
           
-        - name: Start Nginx
+        - name: Start MariaDB-Server
           service: 
             name: mysql
             enabled: yes 
             state: restarted
+            
+        - name: python-mysqldb MySQL-python setup
+          package: 
+            name: python-mysqldb 
+            state: present
+            
+        # This command will fail when the root password was set previously
+        - name: Check if root password is set
+          shell: >
+            mysqladmin -u root status
+          changed_when: false
+          failed_when: false
+          register: root_pwd_check
+          
+        - name: Set MariaDB root password for the first time (root@localhost)
+          mysql_user:
+            name: root
+            password: "{{ mariadb_root_password }}"
+            host: localhost
+            state: present
+          when: root_pwd_check.rc == 0
+
+        - name: Set MariaDB root password for 127.0.0.1, ::1
+          mysql_user:
+            name: root
+            password: "{{ mariadb_root_password }}"
+            host: "{{ item }}"
+            login_user: root
+            login_password: "{{ mariadb_root_password }}"
+            state: present
+          with_items:
+            - ::1
+            - 127.0.0.1
+          when: root_pwd_check.rc == 0
+          
+        - name: Copy dump
+          copy:
+            src: "{{ dump_file }}"
+            dest: "{{ dump_tmp }}"            
+
+        - name: dump run
+          mysql_db:
+            name: pantest
+            login_user: root
+            login_password: "{{ mariadb_root_password }}"
+            state: import
+            target: "{{ dump_tmp }}"
+        
+        - name: Remove the test database
+          mysql_db:
+            name: test
+            login_user: root
+            login_password: "{{ mariadb_root_password }}"
+            state: absent
+            
+        - name: Remove anonymous users
+          mysql_user:
+            name: ''
+            host_all: true
+            login_user: root
+            login_password: "{{ mariadb_root_password }}"
+            state: absent
+            
+        - name: Create the users
+          mysql_user:
+            name: "{{ user_login }}"
+            password: "{{ user_password }}"
+            host: "{{ user_host }}"
+            priv: "{{ priv }}"
+            login_user: root
+            login_password: "{{ mariadb_root_password }}"
+            state: present
+            
+        - name: Copy dump
+          copy:
+            src: "roles/config_db/files/50-server.cnf"
+            dest: "/etc/mysql/mariadb.conf.d/50-server.cnf" 
+          notify: restart mariadb
+            
+            
+         

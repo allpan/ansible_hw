@@ -3,6 +3,11 @@
           package: 
             name: python-django
             state: present
+            
+        - name: MySQL-python setup
+          package: 
+            name: MySQL-python 
+            state: present
         
         - name: Gunicorn setup
           package: 

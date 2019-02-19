@@ -1,0 +1,7 @@
+# roles/config_db/handlers/main.yml
+---
+
+- name: restart mariadb
+  service:
+    name: mysql
+    state: restarted

@@ -2,5 +2,10 @@
     - hosts: db
       vars_files:
         - inventories/production/group_vars/all.yml
+        - inventories/production/group_vars/vault.yml
+ #        - vault.yml
+
+#       tasks:
+#          - include: inventories/production/group_vars/all/vault.yml"
       roles:
             - config_db
