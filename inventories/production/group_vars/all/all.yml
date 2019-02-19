@@ -14,8 +14,8 @@ host_name_db: db1
 network_name: pannet
 target_dir: /pan
 source_dir: /roles/web/files/pan
-dump_file: /roles/config_db/files/dump.sql
+dump_file: roles/config_db/files/dump.sql
 dump_tmp: /tmp/dump.sql
 user_login: user
 user_host: '%'
-priv: all
+priv: pantest.*:all
