@@ -1,12 +1,22 @@
 ---
+ #       - name: python-dev setup
+ #         package: 
+  #          name: python-dev
+ #           state: present
+        
         - name: Django setup
           package: 
             name: python-django
             state: present
-            
-        - name: MySQL-python setup
+                                
+        - name: python-pymysql MySQL-python setup
           package: 
-            name: MySQL-python 
+            name: python-mysqldb 
+            state: present
+        
+        - name: python-pymysql setup
+          package: 
+            name: python-pymysql
             state: present
         
         - name: Gunicorn setup

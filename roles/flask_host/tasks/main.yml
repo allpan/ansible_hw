@@ -1,0 +1,50 @@
+---
+        - name: python-dev setup
+          package: 
+            name: python-dev 
+            state: present
+          when: ansible_os_family == 'Debian'
+            
+        - name: libmysqlclient-dev setup
+          package: 
+            name: libmysqlclient-dev 
+            state: present
+          when: ansible_os_family == 'Debian'
+                
+        - name: MySQL-python setup
+          package: 
+            name: MySQL-python 
+            state: present
+          when: ansible_os_family == 'RedHat'
+
+        - name: Install pip
+          package:
+            name: python-pip
+            state: present
+            
+        - name: Installs MySQL-python
+          pip: 
+            name: MySQL-python
+          when: ansible_os_family == 'Debian'            
+            
+        - name: Installs flask-mysql
+          pip: 
+            name: flask-mysql
+
+        - name: Installs gunicorn
+          pip: 
+            name: gunicorn
+            
+        - name: Deploy the flask app
+          template:
+            src: mypan.py.j2
+            dest: /pan/mypan.py
+            
+        - name: centos gunicorn run
+          gunicorn:
+            app: "mypan:app"
+            chdir: "/pan"
+            conf: "/pan/gunicorn.conf"
+     
+            
+            

@@ -10,10 +10,24 @@
             enabled: yes 
             state: restarted
             
-        - name: python-mysqldb MySQL-python setup
+        - name: python-dev setup
           package: 
-            name: python-mysqldb 
+            name: python-dev 
             state: present
+            
+        - name: libmysqlclient-dev setup
+          package: 
+            name: libmysqlclient-dev 
+            state: present
+            
+        - name: Install pip
+          package:
+            name: python-pip
+            state: present
+           
+        - name: Installs MySQL-python
+          pip: 
+            name: MySQL-python
             
         # This command will fail when the root password was set previously
         - name: Check if root password is set
@@ -26,7 +40,7 @@
         - name: Set MariaDB root password for the first time (root@localhost)
           mysql_user:
             name: root
-            password: "{{ mariadb_root_password }}"
+            password: '{{ mariadb_root_password }}'
             host: localhost
             state: present
           when: root_pwd_check.rc == 0

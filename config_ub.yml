@@ -1,6 +1,6 @@
 ---
     - hosts: nginx_ub
       vars_files:
-        - inventories/production/group_vars/all.yml
+        - inventories/production/group_vars/all/all.yml
       roles:
             - config_host_ub

@@ -18,5 +18,5 @@ from django.contrib import admin
 from webpage1 import views
 
 urlpatterns = [
-    url(r'^', views.webpage1, name= 'webpage1'),
+    url(r'^', 'my.webpage1.views.index'),
 ]

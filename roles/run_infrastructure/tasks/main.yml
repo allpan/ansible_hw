@@ -22,7 +22,9 @@
             name: "{{ host_name_ub }}"
             state: started
             volumes:
+              - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
               - "{{ main_path }}{{ source_dir }}:{{ target_dir }}"
+            privileged: yes
             networks:
               - name: "{{ network_name }}"
                 ipv4_address: "172.20.0.3"
