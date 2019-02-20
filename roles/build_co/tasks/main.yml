@@ -1,4 +1,5 @@
 ---
+#roles/build_co/tasks/main.yml
     - name: Build image centos
       docker_image:
         name: "{{ image_centos }}"

@@ -1,0 +1,6 @@
+---
+#config nginx on jumpbox, flask+gunicorn on host, MariaDB on DB
+- import_playbook: config_db.yml
+- import_playbook: flask_host_co.yml
+- import_playbook: flask_host_ub.yml
+- import_playbook: config_jb.yml

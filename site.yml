@@ -1,0 +1,6 @@
+---
+#start run all project
+- import_playbook: build_all.yml
+- import_playbook: run_infrastructure.yml
+- import_playbook: config_all_flask.yml
+

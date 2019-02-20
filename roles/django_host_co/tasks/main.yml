@@ -1,4 +1,5 @@
 ---
+#roles/django_host_co/tasks/main.yml
         - name: Django setup
           package: 
             name: python-django

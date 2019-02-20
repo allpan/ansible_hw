@@ -1,5 +1,6 @@
 ---
-#config nginx on jumpbox, nginx_ub, nginx_co
+#config nginx on jumpbox, django+gunicorn on host, MariaDB on DB
+- import_playbook: config_db.yml
 - import_playbook: config_jb.yml
 - import_playbook: django_ub.yml
 - import_playbook: django_co.yml

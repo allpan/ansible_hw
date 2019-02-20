@@ -1,4 +1,5 @@
 ---
+#config nginx_ub
     - hosts: nginx_ub
       vars_files:
         - inventories/production/group_vars/all/all.yml

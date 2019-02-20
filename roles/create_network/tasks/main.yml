@@ -1,11 +1,12 @@
 ---
+#roles/create_network/tasks/main.yml
         - name: Create a network
           docker_network:
             name: "{{ network_name }}"
             state: started
             ipam_options:
-              subnet: 172.17.2.1/16
-              gateway: 172.17.2.1
+              subnet: "172.20.0.1/16"
+              gateway: "172.20.0.1"
             connected:
                   - {{ host_name_jb }}
                   - {{ host_name_ub }}

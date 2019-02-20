@@ -1,9 +1,5 @@
 ---
- #       - name: python-dev setup
- #         package: 
-  #          name: python-dev
- #           state: present
-        
+#roles/django_host_ub/tasks/main.yml
         - name: Django setup
           package: 
             name: python-django

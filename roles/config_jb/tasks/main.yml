@@ -1,4 +1,5 @@
 ---
+#roles/config_jb/tasks/main.yml
         - name: Nginx setup
           package: 
             name: nginx 

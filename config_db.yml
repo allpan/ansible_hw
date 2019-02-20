@@ -1,11 +1,8 @@
 ---
+#config MariaDB on DB
     - hosts: db
       vars_files:
         - inventories/production/group_vars/all/all.yml
         - inventories/production/group_vars/all/vault.yml
- #        - vault.yml
-
-#       tasks:
-#          - include: inventories/production/group_vars/all/vault.yml"
       roles:
             - config_db

@@ -1,4 +1,5 @@
 ---
+#config nginx_co
     - hosts: nginx_co
       vars_files:
         - inventories/production/group_vars/all/all.yml

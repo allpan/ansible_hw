@@ -1,4 +1,5 @@
 ---
+#roles/config_host_co/tasks/main.yml
         - name: Nginx setup
           package: 
             name: nginx 

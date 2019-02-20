@@ -1,4 +1,5 @@
 ---
+# build both images ubuntu
     - hosts: localhost
       vars_files:
         - inventories/production/group_vars/all/all.yml

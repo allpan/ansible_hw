@@ -1,4 +1,5 @@
 ---
+#config nginx on jumpbox
     - hosts: jumpbox_ub
       vars_files:
         - inventories/production/group_vars/all/all.yml
