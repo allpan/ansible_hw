@@ -7,7 +7,7 @@ Ansible Homework: create and configure simple infrastructure uses Ansible, VBox,
  - на хосте с которого будет осуществляться запуск должен быть установлен Python и Ansible
  - в inventories/production/group_vars/all/all.yml прописать перемененную main_path таким образом, что б она указывала на каталог содержащий корень проекта.
  - в inventories/production/group_vars/all/  в файл id_rsa.pub положить публичный ключ с которым Ansible будет осуществлять подключение к хостам.
- - при запуске использовать файл ssk для раскодирования vault
+ - при запуске использовать файл ssk для раскодирования vault:  ansible-playbook site.yml --vault-password-file ssk
  
 Описание содержимого файлов*:
  * - приведено только описание файлов необходимых для запуска отлаженого проекта на с nginx+gunicorn+flask+mariadb. 
